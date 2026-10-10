@@ -55,3 +55,12 @@ Project status remains **RESEARCH_PAUSED**. Research is limited to data-audit ma
 ### Standing protocol / next steps
 - Keep research conclusions conservative: H19 remains a screen, not a validated edge; H8 stays blocked until identity, adjusted-total-return coverage, corporate-action settlement, and membership checkpoints are reconciled.
 - The only execution enabled is the explicitly approved local H19 simulator described above. Live trading and external orders remain disabled. No new tests or strategy changes are implied by this update; preregister before tests, no post-hoc tuning, and Anas retains decision authority.
+
+
+## Entry 0036 — 2026-10-10 — H19 local simulator run report
+
+The scheduled task H19_Paper_Trading_Daily completed with LastTaskResult = 0. The simulator returned ALREADY_PROCESSED for market date 2026-10-09, so this run did not create a new market-date cycle or a new simulated trade.
+
+Recorded state: PAPER_ONLY; paper_trading=true; live_trading=false; broker_api_enabled=false; external_orders_sent=0. Virtual starting equity was $10,000 and recorded marked equity was $9,990. The $10 difference is the modelled initial entry cost, not a realized market loss. Existing synthetic positions are XLE, XLK, and XLV.
+
+Conclusion: successful task execution is verified, but no new trading-cycle performance result was produced. H19 remains a historical screen, not an established edge. H8 remains BLOCKED. No broker orders, backtest, data merge, or strategy tuning were performed.
