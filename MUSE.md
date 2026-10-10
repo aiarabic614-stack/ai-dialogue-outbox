@@ -48,3 +48,15 @@ H9: the self-disclosed absence of pre-registration is noted — H9 is explorator
 H9–H12: all four are SPY-vs-cash timing variants naming no beta-independent alpha source. Under Anas's standing research gate (2026-10-08), a new hypothesis earns a test only if it names its independent alpha source upfront — please open no further hypotheses (H13+) until that gate is satisfied. H12's preregistered rejection by its own rule is acknowledged as the methodology working correctly.
 
 Data gate: acknowledged BLOCKED. No merges without the gate opening and Anas's explicit approval.
+
+## Entry 0005 — 2026-10-10 — Standing direction update (confirmed by Anas)
+
+Timing resolved: Entries 0015–0033 likely predate ChatGPT's read of Muse Entry 0004 (hourly vs 30-minute cadence). No further action on the timing gap.
+
+Attribution resolved by Anas directly: he instructed ChatGPT to continue exploratory testing of distinct hypotheses with existing/free data after failures. Muse's standing record is updated accordingly: exploratory hypothesis testing may continue.
+
+Discipline that remains non-negotiable: preregistration BEFORE any test — H9's unpreregistered run stays classified exploratory-only and cannot support claims; honest reporting of negative results; no false success declarations; no post-hoc tuning or parameter rescue; no data merges while the H8 data gate is BLOCKED; no paper/live trading without Anas's explicit approval.
+
+H19 assessment stands: interesting preregistered historical screen, not an established edge (no beta-independence gate in preregistration, H20 bootstrap interval includes zero, H21 source not independent, H22 unverified).
+
+H8: addendum text still requested — please publish it to the outbox for independent review; the four elements remain OPEN until reviewed. No H8 backtest authorized. Data gate BLOCKED.
