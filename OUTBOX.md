@@ -31,3 +31,27 @@ No price data have been merged, no H8 backtest has been run, and the data gate r
 
 ### Safety / next step
 Project status remains **RESEARCH_PAUSED**. Research is limited to data-audit maintenance. Live and paper trading are disabled. Do not merge unvalidated data or run tests until the H8 preregistration revision and data gates are complete and Anas explicitly approves the next step.
+
+
+## Entry 0002 — 2026-10-10 — Latest verified project update
+
+### H19 sector-momentum research
+- Frozen historical screen (2021-01 through 2026-09; 69 months) reported CAGR 17.54% versus SPY 14.70%, Sharpe 1.201 versus 0.991, and maximum drawdown -12.25% versus -23.93%, with 10 bps one-way modeled costs.
+- This is not an established edge. H20's preregistered 6-month circular block bootstrap (20,000 replications) estimated mean monthly excess return +0.198 percentage points, but its 95% interval [-0.411, +0.880] percentage points includes zero: EXCESS_RETURN_NOT_ESTABLISHED.
+- H21's Yahoo adjusted-close series was almost numerically identical to the local Johnbrick series; source independence is NOT ESTABLISHED. H22's Tiingo attempt did not yield an accepted independent replication; DATA_ACCESS/INDEPENDENT_REPLICATION remains unverified/not established.
+
+### Narrow, user-authorized H19 local paper simulator
+- Anas subsequently explicitly approved a local H19 paper-only simulator. This is a scoped update to the earlier default “paper disabled” status; no broker-connected paper account was opened.
+- Verified local state: virtual starting equity $10,000; first snapshot dated 2026-10-09; selected XLE, XLK, XLV based on the September 2026 signal; marked equity $9,990 after a modeled $10 entry cost. This is only the initialization snapshot, not evidence of strategy performance.
+- The daily Windows scheduled task was registered and manually run successfully (LastTaskResult 0). The local simulator has no brokerage client: live_trading=false, broker_api_enabled=false, external_orders_sent=0. It may use cached Yahoo raw data on request failure and warns when it does; cached data must not be represented as fresh.
+- This local simulator does not authorize any real-money trading, broker API, external orders, parameter changes, or H8 testing.
+
+### H8 data audit and gate
+- H8 remains BLOCKED; no H8 backtest or price-panel merge is authorized. Latest coverage audit: 1,491,642 member-days; 8,383 without an adjusted-close candidate; 6,104 without any checked price candidate; zero duplicate mapped keys and zero overlapping base-ticker/day keys.
+- The 2026-10-10 Massive probe accessed only recent SPY bars; requests for SPY Jan-2015, TFCF Nov-2018, and CA Nov-2018 returned HTTP 403. The free tier's tested history/adjustment limits do not resolve required legacy adjusted-total-return gaps.
+- Tiingo has some candidate SPY/TFCF/TFCFA data, but INFO/CA/MON returned no rows for required windows, DISCA was insufficient, and issuer identity/terminal settlement semantics remain unresolved. Historical membership checkpoint differences also remain open.
+- H8 addendum now specifies mechanism, conditional prediction, rebound diagnostic, and numeric pass/fail criteria; it explicitly does not authorize testing. No source candidate has been approved for price fill or terminal settlement.
+
+### Standing protocol / next steps
+- Keep research conclusions conservative: H19 remains a screen, not a validated edge; H8 stays blocked until identity, adjusted-total-return coverage, corporate-action settlement, and membership checkpoints are reconciled.
+- The only execution enabled is the explicitly approved local H19 simulator described above. Live trading and external orders remain disabled. No new tests or strategy changes are implied by this update; preregister before tests, no post-hoc tuning, and Anas retains decision authority.
