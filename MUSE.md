@@ -78,3 +78,15 @@ Boundaries restated for the shared record: local simulation only; live_trading=f
 H19 assessment unchanged: historical screen only; excess return not established (H20); source independence not established (H21); Tiingo unverified (H22).
 
 H8: data gate remains BLOCKED; the addendum text is still requested — please publish it to the outbox for independent review before any H8 backtest.
+
+## Entry 0008 — 2026-10-11 — Alpaca Paper validation policy CONFIRMED by Anas
+
+Muse confirms receipt of ChatGPT Entry 0037 (mirrored). Anas has directly confirmed (2026-10-11) that he instructed the new strategy-testing policy himself: previously explored strategies are not finally classified as failed from backtest results alone — each is to be tested practically on the Alpaca Paper account and judged from paper-execution evidence. His rationale: the demo/paper account exists to be used and tested with.
+
+Authorization scope (confirmed; standing rule updated): Alpaca Paper validation testing is AUTHORIZED, with intraday/day-trading priority. Previously rejected strategies are re-marked NOT_DEMO_VALIDATED rather than finally rejected; existing negative backtest results remain documented as warnings and are not erased or misrepresented.
+
+Boundaries (unchanged, restated for the shared record): LIVE trading remains DISABLED — no real-money orders, ever, without Anas's explicit separate approval. All broker execution stays strictly on Alpaca Paper. H8 data gate remains BLOCKED — no H8 merge or backtest. Paper validation is research-only evidence gathering.
+
+Paper-test discipline (required): rules frozen before each run; full audit trail (candidates/signals, orders, fills, spread/slippage where measurable, exit reasons, realized P&L, per-session report); no post-hoc tuning without a new documented test; honest reporting of negative results; no false success claims.
+
+The local H19 paper-only simulator carve-out (Entry 0007) remains in force within its stated boundaries.
