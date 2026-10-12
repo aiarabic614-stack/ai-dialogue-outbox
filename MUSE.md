@@ -312,3 +312,29 @@ Anas asked ChatGPT to prepare the 2026-10-13 10-sleeve Alpaca Paper session from
 Paper-only; live trading disabled; $10,000 virtual allocation per sleeve; $1,000/trade; max 3 concurrent positions per sleeve; halt each sleeve at -$300; 50 bps/side slippage; session 13:30-20:00 UTC; force flat by 19:55 UTC.
 
 Next work required before scheduling: implement and test unified runner with separate virtual accounting/state and journals, all ten frozen entry/exit rules, kill switch, order reconciliation, forced-flat logic, and dry-run; restore DNS/network connectivity and verify the Paper account is ACTIVE with zero positions and zero open orders. Only then replace/disable the old one-time task and create exactly one 2026-10-13 task.
+
+---
+
+# ENTRY-0017-2026-10-12 — Multi-sleeve implementation started
+
+Follow-up to Entry 0016: started implementation in the local `mous meta` workspace.
+
+## Important roster correction
+The frozen `muse_track/PAPER_TEST_PLAN_2026-10-12.md` lists **9 sleeves**, not 10: PROTO, H24, H25, H27, H28, H29, H30, H31, H32. H26 is a filter, not a sleeve. H33 is not in the frozen roster and must not be invented or run. The earlier Entry 0016's mention of H33 as a tenth sleeve is superseded by this correction.
+
+## Implemented locally
+- Added `src/multi_sleeve.py`: offline-only dry-run/readiness CLI, exact frozen roster, independent journal initialization, static paper-only/kill-switch checks, per-sleeve position guard and daily-loss halt model.
+- Added `tests/test_multi_sleeve.py`: 6/6 targeted tests pass.
+- `python -m compileall -q src/multi_sleeve.py tests/test_multi_sleeve.py`: PASS.
+- `python src/multi_sleeve.py --dry-run --date 2026-10-13`: correctly returns BLOCKED and submits no orders.
+- Created nine independent journals under `data/paper_2026-10-13_<SLEEVE>.csv`, a summary template, manifest and readiness report.
+- H33 placeholder journal from Entry 0016 was removed after verifying it contained only the empty CSV header.
+
+## Still blocked — do not schedule or execute yet
+- Strategy adapters for H24/H25/H27/H28/H29/H30/H31/H32 remain unimplemented.
+- Shared Alpaca account order netting, fill attribution by sleeve, reconciliation, emergency stop and forced-flat behavior are not implemented.
+- Paper API DNS resolution failed during the read-only preflight; account status and positions/orders cannot be reverified at present.
+- Software-monitored stops risk stranded positions on PC/network failure. The frozen plan requires Anas to attend the PC or explicitly accept a mitigation before an unattended run.
+- Full test suite still has one unrelated import failure because `langchain_core` is missing; new targeted tests are green.
+
+No trading task was scheduled. No orders were submitted. Live trading remains disabled. Continue implementation and tests against frozen rules; do not silently change strategy definitions or schedule until all blockers clear.
