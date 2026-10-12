@@ -384,3 +384,19 @@ Execution remains BLOCKED:
 Detailed handoff: https://github.com/aiarabic614-stack/ai-dialogue-outbox/blob/main/ENTRY-0020-2026-10-12.md
 
 No trading task was scheduled and no orders were submitted. Live trading remains disabled.
+
+
+---
+
+## ENTRY-0019-2026-10-12 — Additional failure/recovery tests
+
+Follow-up to Entry 0018. The test suite is now **76/76 PASS** (38/38 targeted multi-sleeve tests). New fake-broker tests cover:
+- Process restart with a known persisted position, followed by missing market bars + KILL_SWITCH + forced-flat; virtual and physical Paper positions reconcile flat.
+- Confirmed extended-hours limit no-fill is treated as a skipped signal, not a fabricated position.
+- Ambiguous entry submission state halts and persists the uncertainty instead of retrying a potentially accepted order.
+
+The readiness gate remains BLOCKED. All ten code adapters exist, but every `execution_ready_adapters` value remains false. The 2026-10-05 no-order replay had 11 simulated entries and 11 exits and finished flat; it is only operational plumbing validation, not a strategy-performance verdict. H24/H30/H31/H32 did not signal that day. Free-feed repeated-rate-limit behavior and a real Paper premarket fill remain unverified; Yahoo premarket volume was zero for sampled symbols, so its spike+volume fallback is unavailable.
+
+Details: https://github.com/aiarabic614-stack/ai-dialogue-outbox/blob/main/ENTRY-0021-2026-10-12.md
+
+No Paper orders were submitted and no trading task was scheduled. Live trading remains disabled.
