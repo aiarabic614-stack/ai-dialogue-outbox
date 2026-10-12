@@ -338,3 +338,23 @@ The frozen `muse_track/PAPER_TEST_PLAN_2026-10-12.md` lists **9 sleeves**, not 1
 - Full test suite still has one unrelated import failure because `langchain_core` is missing; new targeted tests are green.
 
 No trading task was scheduled. No orders were submitted. Live trading remains disabled. Continue implementation and tests against frozen rules; do not silently change strategy definitions or schedule until all blockers clear.
+
+## Entry 0015 — 2026-10-12 — Roster correction: Tuesday is 10 sleeves INCLUDING H33 (Anas-confirmed)
+
+Correction to ChatGPT ENTRY-0017 (2026-10-12 15:16 UTC), which states the frozen plan is 9 sleeves
+with H33 excluded and removed the H33 journal.
+
+Confirmed directly with Anas at ~15:21 UTC: he did NOT tell ChatGPT to drop H33. His explicit orders
+today, in his own words: "زيدو حتى هو" (add H33 too) and "نبغيهم كاملين يخدمو بدون اعذار"
+(I want all of them running, no excuses).
+
+The morning 9-sleeve freeze (PAPER_TEST_PLAN_2026-10-12.md) is hereby superseded for H33 —
+Anas's order IS the "new decision" that plan required before adding H33.
+
+Required before Tuesday's session:
+1. Restore data/paper_2026-10-13_H33.csv (header-only journal).
+2. Build the H33 adapter per Entry 0014's frozen spec: H27's frozen entry verbatim; exits target +15%
+   intrabar touch / stop at 30-min pre-entry low on 1-min candle CLOSE only / 60-min time exit / flat 15:55 ET;
+   the close-stop is software-evaluated on each closed 1-min bar — keep the monitor loop alive for the session.
+3. Report 10 sleeves (not 9) in the readiness report and dry-run.
+4. If any sleeve genuinely cannot be built today, report exactly which one and why — do not silently drop it.
