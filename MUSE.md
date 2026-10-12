@@ -193,3 +193,39 @@ Interpretation (directional, not a verdict): the exits worked mechanically — 8
 
 ### Instruction
 Do NOT re-run H23 — the one-run discipline is spent. If you wish, independently AUDIT this run instead: script src/h23_backtest.py, trades data/h23_trades.csv, pre-registration HYPOTHESIS_23_EXIT_LOGIC.md (all in Muse's workspace — ask Anas if you need the dataset transferred for verification). Otherwise stand down on H23; any next hypothesis is Anas's call.
+
+## Entry 0013 — 2026-10-12 — Monday multi-strategy intraday paper test (Anas-ordered)
+
+### New standing policy (Anas, 2026-10-12 ~08:20 local)
+1. **Intraday/daily strategies ONLY stay active** for paper testing. Long-horizon, weekend-only, and month-end-only strategies are PARKED (this includes the H19 monthly simulator — parked unless Anas vetoes).
+2. **Paid data is OFF the table** until the first dollar is earned. Free tier only.
+3. Paper tests remain VALIDATION (Entry 0037 policy): backtest negatives stay documented; LIVE stays DISABLED.
+
+### Today's test — 2026-10-12 US session (13:30–20:00 UTC)
+Anas ordered: prepare ALL intraday strategies for today's paper test, split the balance between them, test them all, journal each separately for later study.
+
+**Roster — 9 sleeves** (H26 Spike Scan Filter EXCLUDED: it is a universe filter, not a standalone strategy):
+| Sleeve | Strategy | Frozen rules |
+|---|---|---|
+| PROTO | ORB/VWAP prototype (R2 rules) | Entry 0038 params (already in your engine) |
+| H24 | Micro Pullback | private repo `mousemeta-bot-code`, `muse_track/HYPOTHESIS_24_MICRO_PULLBACK.md` |
+| H25 | ABCD Pattern | `muse_track/HYPOTHESIS_25_ABCD_PATTERN.md` |
+| H27 | Premarket Runner Breakout | `muse_track/HYPOTHESIS_27_PREMARKET_RUNNER.md` |
+| H28 | Morning Panic Dip Buy | `muse_track/HYPOTHESIS_28_MORNING_PANIC_DIPBUY.md` |
+| H29 | Half/Whole-Dollar Levels | `muse_track/HYPOTHESIS_29_HALF_DOLLAR_LEVELS.md` |
+| H30 | B&R Trend Continuation | `muse_track/HYPOTHESIS_30_BR_TREND_CONTINUATION.md` |
+| H31 | HOD Breakout | `muse_track/HYPOTHESIS_31_HOD_BREAKOUT.md` (Anas-authorized despite recycling flag) |
+| H32 | Dip and Rip | `muse_track/HYPOTHESIS_32_DIP_AND_RIP.md` |
+
+Full plan: `muse_track/PAPER_TEST_PLAN_2026-10-12.md` in the same repo.
+
+**Capital & risk (per sleeve, paper):** $10,000/sleeve (9 × $10k ≈ equity); $1,000/trade; max 3 concurrent positions/sleeve; sleeve daily-loss halt at −3% ($300) — halted sleeve stops, others continue; flat by 15:55 ET; no overnight holds.
+
+**Journaling (Anas's explicit requirement):** one CSV per sleeve per day (`data/paper_2026-10-12_<SLEEVE>.csv`): timestamp_utc, symbol, side, qty, entry_price, exit_price, pnl_usd, exit_reason, hold_minutes. End-of-day per-sleeve summary appended to `data/paper_2026-10-12_SUMMARY.md`. No co-mingling.
+
+### Directives
+1. **Replace** the one-time task `MousMeta Alpaca Paper Trading 2026-10-12` (13:36 UTC, single-strategy) with the multi-sleeve run — one task only, no duplicates. Dry-run (no orders) by 12:30 UTC.
+2. If you cannot wire all 9 sleeves by the open, priority order: PROTO, H27, H30, H29, H32, H28, H31, H24, H25. Run what fits; REPORT what didn't (never silently drop); schedule the rest across the week.
+3. **Unresolved risk ×9:** stop-losses are software-monitored (Entry 0038). With 9 sleeves, a PC/process/internet failure could strand positions across sleeves. Do NOT run 9 unattended sleeves without Anas's explicit acceptance — ask him directly before the session.
+4. Report back by 12:30 UTC: what is wired and running, what isn't, and the accepted risk posture.
+5. Honest framing: none of the 9 candidates showed edge in backtests (8 INCONCLUSIVE, 1 GRAY with absent mechanism). Today's value is the separate journals for later study — report negatives plainly per sleeve. No tuning during the session.
