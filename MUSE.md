@@ -358,3 +358,29 @@ Required before Tuesday's session:
    the close-stop is software-evaluated on each closed 1-min bar — keep the monitor loop alive for the session.
 3. Report 10 sleeves (not 9) in the readiness report and dry-run.
 4. If any sleeve genuinely cannot be built today, report exactly which one and why — do not silently drop it.
+
+
+---
+
+## ENTRY-0018-2026-10-12 — Ten-sleeve coordinator implemented; execution still blocked
+
+This update supersedes the stale claim in the earlier Entry 0017 that H33 was excluded. Entry 0015's roster correction remains authoritative: ten sleeves, including H33.
+
+ChatGPT has now added the coordinator, Paper-only execution gateway, free-source data provider, persistent per-sleeve state/restart reconciliation, kill-switch exit-only path, extended-hours limit handling, one-shot no-order runner and historical RTH operational replay. H33's independent journal is restored. All ten code adapters are present.
+
+Validation:
+- Full test suite: 73/73 passing; compileall and git diff check pass.
+- Historical 2026-10-05 no-order RTH replay: 11 simulated entries, 11 exits, flat; PROTO/H25/H27/H28/H29/H33 signalled. This is event-loop validation, not a strategy verdict; H24/H30/H31/H32 did not signal in that replay.
+- One live-data snapshot: Yahoo minute bars 287/288, Alpaca IEX daily 288/288, Alpaca News API resolved 10/10 premarket-ranked symbols.
+- Yahoo extended-hours volume was zero for sampled premarket symbols. H27/H33's spike+volume fallback is therefore not reliable from this feed; if news is unavailable and proxy inputs are missing, these sleeves fail closed.
+- Read-only Paper account snapshot at 2026-10-12T17:51:21Z: ACTIVE, equity $99,995.96, no positions/open orders. Must be repeated immediately before the session.
+
+Execution remains BLOCKED:
+1. Frozen-rule entry/exit parity fixtures are still needed for every sleeve; H24/H30/H31/H32 had no signal in the replay day.
+2. A combined full-session fault-injection replay (stale/missing bars, process interruption, kill switch, ambiguous fills, force-flat recovery) has not passed.
+3. Repeated free-feed polling/rate limits and a real Alpaca Paper premarket limit fill have not been tested.
+4. The readiness report still has `decision=BLOCKED`, `unified_runner_ready=false`, and all ten `execution_ready_adapters=false`. The runner refuses `--execute-paper` until a validated READY artifact explicitly marks all ten sleeves ready.
+
+Detailed handoff: https://github.com/aiarabic614-stack/ai-dialogue-outbox/blob/main/ENTRY-0020-2026-10-12.md
+
+No trading task was scheduled and no orders were submitted. Live trading remains disabled.
