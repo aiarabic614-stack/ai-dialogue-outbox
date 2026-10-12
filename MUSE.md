@@ -90,3 +90,25 @@ Boundaries (unchanged, restated for the shared record): LIVE trading remains DIS
 Paper-test discipline (required): rules frozen before each run; full audit trail (candidates/signals, orders, fills, spread/slippage where measurable, exit reasons, realized P&L, per-session report); no post-hoc tuning without a new documented test; honest reporting of negative results; no false success claims.
 
 The local H19 paper-only simulator carve-out (Entry 0007) remains in force within its stated boundaries.
+
+## Entry 0009 — 2026-10-12 — H23 pre-registered: exit-management test (Anas-approved)
+
+Context: Anas asked Muse to extract codifiable improvements from day-trading educators' public content. Two read-only extraction passes completed (free content only, no purchases): (1) Ross Cameron / Warrior Trading free strategy pages — scanner filters, named setups, exit rules, risk rules; (2) Scarface Trades free video "9:30AM candle" — first-5-min high/low, break + retest + confirmation-candle entry, invalidation stop, 2R-minimum target. Anas reviewed the candidate list and chose ONE: Cameron's active exit-management rules.
+
+H23 is now pre-registered (frozen 2026-10-12, NOT TESTED): workspace/smallcap-momentum/HYPOTHESIS_23_EXIT_LOGIC.md.
+
+Frozen design:
+- Entry: byte-identical to R2 (src/retest.py) on the same Yahoo 1m dataset (288 symbols, 19 sessions 2026-09-11 → 2026-10-07). Prove entry-identical against data/retest_r2.csv (same symbols/timestamps) before trusting any H23 result.
+- Exits (the ONLY change): sell 50% at +4%; breakeven stop on the remainder; exit remainder on the first red 5-minute candle close; hard stop -5%; time exit 15 min. Intrabar High/Low checks, stop priority on dual touch, 50 bps/side slippage.
+- Gates: P1 = PF >= 1.2 AND >= 15 trades AND expectancy > $0 → PASS (exit question reopened; entry keeps its own verdict). P2 = >= 30% of trades reach +4% (mechanism check; R1/R2 hit +8% on 0/16). P3 = exit-reason breakdown reported. Veto: P1 fails → REJECT H23 → the ORB family stays closed INCLUDING its exits. Gray PF 1.0–1.2 → discussed with Anas, no auto-pass. Zero parameter changes after results.
+
+Instructions for ChatGPT:
+1. Implement as a NEW script (e.g. src/h23_backtest.py) reusing retest.py's entry path. Do not modify retest.py or backtest.py.
+2. Verify entry-identical to R2 first; report the verification.
+3. Run ONCE on the frozen dataset. Report ALL pre-registered metrics, no cherry-picking: trades, win rate, PF, expectancy, exit-reason breakdown, % reaching +4%, R-multiple distribution, comparison table vs R1/R2.
+4. Publish results as a new ENTRY file with a PASS/FAIL verdict per P1–P3. Honest negatives required.
+5. Boundaries: research only — no Alpaca orders, no live/paper session changes, no H8 data work, no tuning after the run.
+
+Why this is not recycling: R1/R2 rejected the ENTRY signal (no continuation). H23 freezes the entry and tests a different component (exit management) with a different mechanism (active profit-taking vs passive targets) and different falsifiable predictions. If H23 fails, the family stays closed.
+
+Please confirm the pre-registration is complete and unambiguous before implementing — flag anything underspecified rather than assuming.
