@@ -112,3 +112,48 @@ Instructions for ChatGPT:
 Why this is not recycling: R1/R2 rejected the ENTRY signal (no continuation). H23 freezes the entry and tests a different component (exit management) with a different mechanism (active profit-taking vs passive targets) and different falsifiable predictions. If H23 fails, the family stays closed.
 
 Please confirm the pre-registration is complete and unambiguous before implementing — flag anything underspecified rather than assuming.
+
+## Entry 0010 — 2026-10-12 — H23 frozen spec clarifications (Anas-approved)
+
+Re: CHATGPT-REPLY-2026-10-12-01.md (the 6-point review). The review is accepted as legitimate — every point below is now FROZEN and amends the pre-registration (appended clarification, nothing else changed). Implement exactly as stated; flag anything still ambiguous rather than assuming.
+
+### C1 — Partial profit at +4%: execution price
+- All fills: level price minus 50 bps slippage (buys: fill = level x (1 - 0.005)).
+- Scale fill: a 1-min bar whose High touches entry_signal x 1.04 -> sell 50% at (entry_signal x 1.04) - slippage.
+- Gap through target: a 1-min bar OPENING above the +4% level -> fill the 50% at the bar's Open - slippage.
+
+### C2 — Breakeven stop: reference and activation
+- Reference = the ACTUAL entry fill price (entry signal price - slippage), not the theoretical trigger.
+- Activation: the breakeven stop becomes active on the remaining 50% immediately after the partial fill is confirmed, including within the same 1-min bar (check the partial fill first, then the breakeven stop against the bar's Low).
+- Breakeven fill = entry fill price - slippage (a small certain loss of one slippage leg; reported as such).
+
+### C3 — Five-minute red-candle exit
+- 5-min candles aligned to fixed session boundaries: 09:30, 09:35, 09:40, ... ET.
+- Eligible: the first 5-min candle with close_time strictly AFTER the entry timestamp (the candle containing the entry counts if it closes after entry).
+- Red = Close < Open. Doji (Close == Open) does NOT trigger.
+- Execution: exit the full remainder at that candle's Close - slippage.
+
+### C4 — Same-bar priority (deterministic)
+Within each 1-min bar, in this order:
+1. Active stop (hard -5% before any scale; breakeven after the scale): bar Low touches -> full exit at stop level - slippage. Gap (bar opens below stop) -> fill at Open - slippage.
+2. Scale target +4% (only before filled): bar High touches -> 50% at target - slippage; gap -> Open - slippage.
+3. Red-candle exit: only at 5-min candle closes, evaluated after that bar's 1-min intrabar checks.
+4. Time exit: 15 min after entry -> flat remainder at last price - slippage.
+Dual touch of stop and target in one bar (no gap): STOP wins (conservative, unchanged).
+
+### C5 — R-multiple definitions
+- entry_fill = entry signal price - slippage. stop_fill_initial = (entry_signal x 0.95) - slippage.
+- Initial R per share: R0 = entry_fill - stop_fill_initial (> 0 by construction).
+- Per-trade R = total realized P&L / (R0 x full position quantity). All legs use actual fills minus slippage. Report distribution and mean.
+
+### C6 — P2 metric
+- P2 = fraction of trades where the max 1-min bar High between entry (inclusive) and position close (or 15-min cap) reached >= entry_signal x 1.04, independent of the subsequent exit outcome.
+- Missing bars: a trade with any missing 1-min bar inside its 15-min window is EXCLUDED from P2's numerator and denominator; the excluded count is reported. If > 20% of trades are excluded, P2 is reported INCONCLUSIVE.
+
+### Data concern — entry-identical verification
+- data/retest_r2.csv is the trade list (8 rows), not the dataset. The frozen dataset is data/yahoo_1m/*.json (288 symbols).
+- Procedure: run src/retest.py on the frozen dataset to regenerate entries; the H23 script must produce the IDENTICAL entry set (symbol, date, entry minute). Diff and report it. Any mismatch = implementation rejected; do not proceed to results.
+
+### Run discipline (restated)
+- ONE run on the frozen dataset. No parameter changes after the run for any reason. New script file only; do not modify retest.py, backtest.py, or any existing file.
+- Publish results as a new ENTRY file: all pre-registered metrics under the C5/C6 definitions, R1/R2 comparison table, entry-verification diff, PASS/FAIL per P1-P3.
