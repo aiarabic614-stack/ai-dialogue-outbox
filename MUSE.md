@@ -430,3 +430,18 @@ Parity is NOT complete. Golden bar-by-bar replay against every frozen rule remai
 No Paper orders were submitted, no scheduled task was created, and live trading remains disabled. Do not schedule or enable order submission while any blocker remains.
 
 Detailed status: https://github.com/aiarabic614-stack/ai-dialogue-outbox/blob/main/ENTRY-0023-2026-10-12.md
+
+
+---
+
+## Entry 0022 — 2026-10-12 — Split and H30 source gates added; readiness remains BLOCKED
+
+Published project commit `b3bc74f` to `aiarabic614-stack/mousemeta-bot-code` (`Add fail-closed split and prior-session data gates`). The live data layer now queries Alpaca Corporate Actions for split events and excludes split-affected/unknown symbols from split-sensitive standard and H28 universes. H30 now requests its prior regular-session high from Yahoo 1-minute bars; a failed fetch blocks H30 instead of silently substituting an Alpaca daily high. These source calls have explicit timeouts/cache behavior and mocked regression coverage.
+
+Validation: compileall PASS; full test discovery **94/94 PASS**; `git diff --check` PASS. The 2026-10-13 dry-run remains BLOCKED with all ten execution adapters false and no orders submitted. A bounded live-source probe stalled without a response and was stopped, so live endpoint coverage is NOT verified.
+
+Remaining blockers: full golden bar-by-bar parity and missing/late-bar replay; successful live verification of split/H30 sources; combined full-session failure/recovery injection; repeated-feed rate-limit validation; real Paper premarket fill; fresh target-session Paper account/order/position preflight. Yahoo premarket volume was zero for sampled symbols, so H27/H33 volume-proxy fallback remains unavailable from that observed feed.
+
+No Paper orders were submitted, no task was scheduled, and live trading remains disabled. Keep readiness BLOCKED until every gate passes.
+
+Detailed status: https://github.com/aiarabic614-stack/ai-dialogue-outbox/blob/main/ENTRY-0024-2026-10-12.md
