@@ -229,3 +229,48 @@ Full plan: `muse_track/PAPER_TEST_PLAN_2026-10-12.md` in the same repo.
 3. **Unresolved risk ×9:** stop-losses are software-monitored (Entry 0038). With 9 sleeves, a PC/process/internet failure could strand positions across sleeves. Do NOT run 9 unattended sleeves without Anas's explicit acceptance — ask him directly before the session.
 4. Report back by 12:30 UTC: what is wired and running, what isn't, and the accepted risk posture.
 5. Honest framing: none of the 9 candidates showed edge in backtests (8 INCONCLUSIVE, 1 GRAY with absent mechanism). Today's value is the separate journals for later study — report negatives plainly per sleeve. No tuning during the session.
+
+## Entry 0014 — 2026-10-12 — Tuesday 10-sleeve broker-paper session spec (Anas-ordered)
+
+**Session:** Tuesday 2026-10-13, 13:30–20:00 UTC (= 13:30–20:00 Morocco).
+US market 09:30–16:00 ET; forced flat **15:55 ET = 19:55 UTC**. Live trading stays DISABLED — Alpaca Paper only.
+
+**Sleeves (10 — all must run, no exceptions per Anas):**
+PROTO, H24, H25, H27, H28, H29, H30, H31, H32, **H33**.
+H26 excluded (universe filter, not a standalone strategy). No other strategies without a new decision.
+
+**Per-sleeve frozen envelope (identical for all 10):**
+- $10,000 virtual allocation; $1,000 per trade; max 3 concurrent positions
+- −$300 daily halt per sleeve (that sleeve stops for the day)
+- Flat by 15:55 ET, no exceptions; 50 bps/side slippage accounting on fills
+- Separate journal: `data/paper_2026-10-13_<SLEEVE>.csv` + `data/paper_2026-10-13_SUMMARY.md`
+- No parameter tuning during the session
+
+**Frozen strategy rules:**
+- PROTO: premarket scan top-20 small caps (score = gap_pct × rel_volume), gap≥10%, price $1–$20;
+  5-min opening-range breakout above VWAP within 30 min of open; exits TP +8% / SL −5% / 15-min flat.
+- H24–H32: per their HYPOTHESIS_24 … HYPOTHESIS_32 docs (one run each, no tuning).
+- **H33 (new 10th sleeve — Scarface close-stop on H27's frozen entry):**
+  Entry = H27's frozen entry verbatim (top-10 premarket % gainers $1–$20, news presence w/ spike+volume
+  proxy fallback labeled "news leg proxied"; 1-min close above trailing 30-min high, m ∈ [270,585];
+  one entry per symbol per day; qty = max(1, ⌊1000/close⌋); buy fill = signal close × (1 + 50 bps)).
+  Exits (from entry signal close, 50 bps/side): (1) target +15% intrabar touch; (2) stop = 30-min pre-entry
+  low, triggered ONLY on 1-min candle close ≤ stop (fill = close × (1 − 50 bps); gap-downs fill at the worse
+  close); (3) time exit 60 min after entry; (4) flat 15:55 ET. Same-bar priority: target → stop-close → time → flat.
+  **Operational note:** the close-stop cannot be broker-native — it MUST be evaluated on each closed 1-min bar
+  by the software monitor. Keep the monitor loop alive for the whole session; Anas accepts the paper-money
+  operational risk (confirmed policy). H33 shares H27's entry stream — same-symbol overlap between H27 and H33
+  sleeves is fine (separate paper accounting) but must be reported.
+
+**Build requirements (Windows PC engine):**
+1. One unified runner, independent sleeve state and journals, paper_only=true, kill switch wired.
+2. Dry-run first with NO orders submitted; report the dry-run honestly (including anything that cannot run and why).
+3. Exactly ONE scheduled task; disable (do not delete) the old single-strategy task.
+4. After-session audit: signals, submitted orders, broker fills, exits, realized P&L, flat confirmation, halts.
+
+**Priority if all ten cannot safely run:** PROTO, H27, H33, H30, H29, H32, H28, H31, H24, H25.
+If any sleeve cannot run, report exactly which and why — no silent omissions.
+
+**Monday 2026-10-12 reference:** PROTO-only task ran 13:30 UTC, scanned 314 symbols, 0 candidates
+(quiet Columbus Day — no gap ≥10%), 0 trades. Paper ACTIVE, $99,995.96, 0 positions.
+Muse's 6-sleeve live shadow also 0 signals — consistent with the strategies' rare-signal profile, not a malfunction.
